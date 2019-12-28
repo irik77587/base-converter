@@ -22,6 +22,12 @@ def sync(c):
         txt[b].config(state = tk.DISABLED)
     btn[base[Smode]].config(state = tk.DISABLED)
     txt[base[Smode]].config(state = tk.NORMAL)
+    txt[base[Smode]].focus()
+
+def tabed(event = None):
+    c = (Smode+1) if Smode < 3 else 0
+    sync(base[c])
+    return('break')
     
 def calc(event = 'none'):
     number = {i:'0.0' for i in base}
@@ -34,6 +40,8 @@ def calc(event = 'none'):
         txt[i].delete(0, tk.END)
         txt[i].insert(0, number[i].upper())
         txt[i].config(validate = 'key', state = tk.DISABLED if not i == base[Smode] else tk.NORMAL)
+window.bind('<Tab>',tabed)
+window.bind('<space>',tabed)
 window.bind('<Return>', calc)
 # lambda is compiled after for loop, by then value of i is the last value in dictionary
 btn = {i : tk.Button(window, text = j, width = 10, height = 2, command = lambda c = i: sync(c), font = ('default', 12)) for i,j in label.items()}
