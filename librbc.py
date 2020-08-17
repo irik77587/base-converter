@@ -1,22 +1,22 @@
 def splitter(num, bytesize):# source bytesize is 3 for hexa, 4 for octal, 12 for binary
-    d = [v for v in num.split('.')[0]]
-    f = [v for v in num.split('.')[1]]
-    while len(d)%bytesize != 0:
-        d.insert(0, '0')
-    while len(f)%bytesize != 0:
-        f.append('0')
+    zero = '000000000000'
+    array = num.split('.')
+    d = zero[:(12-(len(array[0])%12))] + array[0]
+    f = array[1] + zero[:(bytesize-(len(array[1])%bytesize))]
     return [d,f]
 
 def binModifier(num, bytesize):# destination bytesize is 3 for octal 4 for hexa
-    x = len(num[0])/bytesize
-    d = [''.join(num[0][bytesize*i:bytesize*(i+1)]) for i in range(int(x))]
-    y = len(num[1])/bytesize
-    f = [''.join(num[1][bytesize*i:bytesize*(i+1)]) for i in range(int(y))]
+    zero = '00000'
+    d = [ num[0][(0+x):(bytesize+x)] for x in range(0,int(len(num[0])),bytesize) ]
+    f = [ num[1][(0+x):(bytesize+x)] for x in range(0,int(len(num[1])),bytesize) ]
+    if d[0] in zero[:bytesize]:
+        del d[0]
+    if f[-1] in zero[:bytesize]:
+        del f[-1]
     return [d,f]
 
 hexa = {'0':'0000','1':'0001','2':'0010','3':'0011','4':'0100','5':'0101','6':'0110','7':'0111','8':'1000','9':'1001','a':'1010','b':'1011','c':'1100','d':'1101','e':'1110','f':'1111'}
-octa = {k:v[1:] for k,v in hexa.items()}
-octa = dict(list(octa.items())[:8])
+octa = {k:v[1:] for k,v in dict(list(hexa.items())[:8]).items()}
 invOcta = {v:k for k,v in octa.items()}
 invHexa = {v:k for k,v in hexa.items()}
 def splitConverter(num, sample):
@@ -51,6 +51,4 @@ def converter(num,c):
     binary = beautiful(binary)
     octal = beautiful(octal)
     hexad = beautiful(hexad)
-    return {'b' : ''.join(binary[0]) + '.' + ''.join(binary[1]),
-            'o' : ''.join(octal[0]) + '.' + ''.join(octal[1]),
-            'h' : ''.join(hexad[0]) + '.' + ''.join(hexad[1])}
+    return { 'b' : binary[0] + '.' + binary[1], 'o' : octal[0] + '.' + octal[1], 'h' : hexad[0] + '.' + hexad[1] }
