@@ -16,7 +16,7 @@ def binModifier(num, bytesize):# destination bytesize is 3 for octal 4 for hexa
 
 hexa = {'0':'0000','1':'0001','2':'0010','3':'0011','4':'0100','5':'0101','6':'0110','7':'0111','8':'1000','9':'1001','a':'1010','b':'1011','c':'1100','d':'1101','e':'1110','f':'1111'}
 octa = {k:v[1:] for k,v in hexa.items()}
-octa = dict(list(octal.items())[:8])
+octa = dict(list(octa.items())[:8])
 invOcta = {v:k for k,v in octa.items()}
 invHexa = {v:k for k,v in hexa.items()}
 def splitConverter(num, sample):
