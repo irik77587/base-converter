@@ -2,12 +2,12 @@ def splitter(num, bytesize):# source bytesize is 3 for hexa, 4 for octal, 12 for
     zero = '000000000000'
     array = num.split('.')
     unaligned = len(array[0])%bytesize
-    d = zero[:(bytesize-unaligned)] if unaligned else '' + array[0]
+    d = (zero[:(bytesize-unaligned)] if unaligned else '') + (array[0] if len(array[0]) else zero[:bytesize])
     try:
-	    unaligned = len(array[1])%bytesize
-	    f = array[1] + (zero[:(bytesize-unaligned)] if unaligned else '')
+        unaligned = len(array[1])%bytesize
+        f = array[1] + (zero[:(bytesize-unaligned)] if unaligned else '')
     except IndexError:
-	    f = zero[:bytesize]
+        f = zero[:bytesize]
     return [d,f]
 
 def binModifier(num, bytesize):# destination bytesize is 3 for octal 4 for hexa
