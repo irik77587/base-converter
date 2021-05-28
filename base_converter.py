@@ -11,7 +11,7 @@ symbol = {'b':'01',
           'd':'0123456789',
           'h':'0123456789abcdef'}
 Smode = 0
-def known(action, key, content, state):# tkinter treats all data as string, hence the value of action also in is prefered over == for char
+def known(action, key, content, state):# tkinter treats all data as string, hence the value of action is string. "in" is prefered over "==" for char
     return True if not action == '1' or key in symbol[state] or key in symbol[state].upper() or (not '.' in content and key in '.') else False
 vcmd = window.register(known)
 def sync(c):
